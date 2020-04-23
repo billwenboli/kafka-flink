@@ -18,6 +18,44 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.billwenboli.kafka.FlinkWordCount</mainClass>
+                            <classpathPrefix>dependency-jars/</classpathPrefix>
+                        </manifest>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>com.billwenboli.kafka.FlinkWordCountWithWindow</mainClass>
+                            <classpathPrefix>dependency-jars/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/dependency-jars/
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
