@@ -1,2 +1,3 @@
-# kafka-flink
-Kafka Flink Java Example
+# Kafka Flink Java Example
+
+Note: Latest working version is 1.12.1
