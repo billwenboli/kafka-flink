@@ -17,15 +17,15 @@ public class FlinkWordCount {
     public static void main(String[] args) throws Exception {
 
         String inputTopic = "flink-input";
-        String outputTopic = "flink-output";
+        String outputTopics = "flink-output";
         String consumerGroup = "kafka-flink-group";
-        String address = "127.0.0.1:9092";
+        String bootstrapServers = "127.0.0.1:9092";
 
         // Flink Stream execution
         StreamExecutionEnvironment environment = StreamExecutionEnvironment.getExecutionEnvironment();
 
         Properties properties = new Properties();
-        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, address);
+        properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup);
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
@@ -34,7 +34,7 @@ public class FlinkWordCount {
         FlinkKafkaConsumer<String> consumer = new FlinkKafkaConsumer<>(inputTopic, new SimpleStringSchema(), properties);
 
         // Define output producer
-        FlinkKafkaProducer<String> producer = new FlinkKafkaProducer<>(outputTopic, new SimpleStringSchema(), properties);
+        FlinkKafkaProducer<String> producer = new FlinkKafkaProducer<>(outputTopics, new SimpleStringSchema(), properties);
 
         // Attach consumer to input data stream
         DataStream<String> stringInputStream = environment.addSource(consumer);
